@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KOKOSHIBO AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      overflow-x: hidden;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 50px 20px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      color: #00e6ff;
+      text-shadow: 0 0 20px #00e6ff, 0 0 40px #00e6ff;
+      animation: glowPulse 2.5s infinite alternate;
+    }
+
+    p.tagline {
+      margin-top:25px;
+      font-size: 1.5rem;
+      opacity: 0.8;
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+    .input-area {
+      margin-top: 40px;
+      animation: fadeInUp 2.5s ease-in-out;
+    }
+
+    .input-area input {
+      padding: 12px 20px;
+      width: 70%;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .input-area input:focus {
+      box-shadow: 0 0 15px #00e6ff;
+      transform: scale(1.05);
+    }
+
+    .buttons {
+      margin-top:10px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap:10px;
+      animation: fadeInUp 3s ease-in-out;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #00e6ff, #007acc);
+      color: yello;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 15px rgba(0, 230, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 230, 255, 0.6);
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: all 0.5s;
+    }
+
+    .btn:hover::after {
+      left: 100%;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      animation: fadeIn 4s ease-in-out;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 20px #00e6ff, 0 0 40px #00e6ff; }
+      to { text-shadow: 0 0 40px #ff00ff, 0 0 80px #ff00ff; }
+    }
+
+    /* Background Animation */
+    .bg-animation {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 230, 255, 0.2);
+      animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0) rotate(0deg); }
+      to { transform: translateY(-1000px) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating background circles -->
+  <div class="bg-animation">
+    <div class="circle" style="width:200px; height:200px; left:10%; bottom:-200px;"></div>
+    <div class="circle" style="width:300px; height:300px; left:70%; bottom:-300px; animation-delay:5s;"></div>
+    <div class="circle" style="width:150px; height:150px; left:40%; bottom:-150px; animation-delay:10s;"></div>
+  </div>
+
+  <header>
+    <h1>KOKOSHIBO AI</h1>
+    <p class="tagline">Your Bangla AI Assistant </p>
+   </header>
+   <style>
+  .chat-box {
+      width: 100%;
+      max-width: 500px;
+      height: 90vh;
+      display: flex;
+     flex-direction: column;
+    }
+    .messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .msg {
+      max-width: 75%;
+      margin: 5px 0;
+      padding: 10px 15px;
+      border-radius: 20px;
+      animation: fadeIn 0.3s ease;
+      word-wrap: break-word;
+      display: flex;
+      align-items: center;
+    }
+    .user {
+      background:skyblue;
+      color:blue;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+      justify-content: flex-end;
+    }
+    .ai {
+      background:skyblue;
+      color: black;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+    }
+    .avatar {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+    input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px 18px;
+      border-radius: 50px;
+      background: #0084ff;
+      color: white;
+      cursor: pointer;
+      font-size:15px;
+    }
+     .rps-btn {
+      margin: 5px;
+      padding: 8px 12px;
+      border-radius: 50;
+      border: none;
+      cursor: pointer;
+      background:  #00e6ff, #007acc;
+      color: white;
+      font-weight: bold;
+    }
+    .rps-btn:hover {
+      background: #e0a8;
+    }
+    button:hover {
+      background: #005bb5;
+    }
+    @keyframes fadeIn {
+      from {opacity:0; transform: translateY(5px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+   </style>
+
+   <div class="buttons">
+    <button class="btn">Next update</button>
+    <button class="btn" id="historyBtn">History</button>
+    <button class="btn">Dark Mode</button>
+    <button class="btn" id="quizBtn" >Quiz</button>
+    <button class="btn" id="timeBtn">Time</button>
+  </div>
+
+  <div class="chat-box">
+    <div class="messages" id="messages"></div>
+    <div class="input-area">
+      <input id="userInput" type="text" placeholder="ask"/>
+      <button onclick="sendMessage()">Send</button>
+    </div>
+    <div class="side-panel">
+      <h4>Rock-Paper-Scissors</h4>
+      <button class="rps-btn" onclick="playRPS('rock')">✊ Rock</button>
+      <button class="rps-btn" onclick="playRPS('paper')">🖐 Paper</button>
+      <button class="rps-btn" onclick="playRPS('scissors')">✌ Scissors</button>
+      <p id="score">Player:0 | AI:0 | Draw:0</p>
+    </div>
+  </div>
+    
+  <footer>
+    © 2025 KOKOSHIBO AI | Designed with ❤️ & Premium Style.
+    Created by Nafiz <br>
+    credit:Nafiz and Nibir
+  </footer>
+   <!-- Script for Dark Mode, Time & History -->
+  <script>
+    const btns = document.querySelectorAll('.btn');
+    const body = document.body;
+    btns.forEach(btn => {
+      if (btn.textContent === 'Dark Mode') {
+        btn.addEventListener('click', () => {
+          body.style.background = body.style.background === 'black' ? 
+            'linear-gradient(135deg, #0f2027, #203a43, #2c5364)' : 'black';
+        });
+      }
+    });</script>
+
+  <script>
+
+const messagesDiv = document.getElementById("messages");
+let chatHistory = JSON.parse(localStorage.getItem("chatHistory") || "[]");
+
+function addMessage(text, sender, isGame=false){
+  const msg = document.createElement('div');
+  msg.className = 'msg ' + sender;
+  const avatar = document.createElement('span');
+  avatar.className = 'avatar';
+  avatar.textContent = sender === 'user' ? '👤' : '🤖';
+  msg.appendChild(avatar);
+  const content = document.createElement('span');
+  content.textContent = ' ' + text;
+  msg.appendChild(content);
+  messagesDiv.appendChild(msg);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+  chatHistory.push({sender,text});
+  localStorage.setItem("chatHistory", JSON.stringify(chatHistory));
+}
+
+// Direct API Call
+async function sendMessage(){
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if(!text) return;
+  addMessage(text,'user');
+  input.value='';
+
+  setTimeout(async ()=>{
+    if(quizActive){ 
+      handleQuizAnswer(text); 
+    } else {
+      const reply = await getAIReply(text);
+      addMessage(reply,'ai');
+    }
+  },300);
+}
+
+// Your OpenAI API key (পাবলিক, শুধু পরীক্ষা করার জন্য)
+const OPENAI_API_KEY = "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"; // নিজের key বসাও
+
+async function getAIReply(text){
+  // Local QA
+  const qa = {"hi":"hello","hello":"tumi kemon aaso","who is your creator":"Nafiz"};
+  const key = text.toLowerCase().trim();
+  for(let k in qa) if(key.includes(k)) return qa[k];
+
+  // Direct API call
+  try{
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":"Bearer "+OPENAI_API_KEY
+      },
+      body: JSON.stringify({
+        model:"gpt-3.5-turbo",
+        messages:[{role:"user", content:text}]
+      })
+    });
+    const data = await response.json();
+    return data.choices[0].message.content;
+  } catch(err){
+    return "❌ API call failed. Check your key or internet.";
+  }
+}
+
+    // TIME
+    document.getElementById("timeBtn").addEventListener("click",()=>addMessage("এখন সময়: "+new Date().toLocaleTimeString(),"ai"));
+
+    // HISTORY
+    document.getElementById("historyBtn").addEventListener("click",()=>{
+      if(chatHistory.length===0){addMessage("কোনো ইতিহাস নেই।","ai");return;}
+      let historyText="📜 চ্যাট ইতিহাস:\n";
+      chatHistory.forEach((h,i)=>{historyText+=`${i+1}. ${h.sender==="user"?"👤 User":"🤖 AI"}: ${h.text}\n`;});
+      addMessage(historyText,"ai");
+      const clearBtn=document.createElement("button");
+      clearBtn.textContent="Clear History";
+      clearBtn.style.marginTop="10px";clearBtn.style.background="red";
+      clearBtn.style.color="white";clearBtn.style.cursor="pointer";
+      clearBtn.onclick=()=>{chatHistory=[];localStorage.removeItem("chatHistory");addMessage("✅ ইতিহাস মুছে ফেলা হয়েছে।","ai");clearBtn.remove();};
+      messagesDiv.appendChild(clearBtn);
+    });
+
+    // QUIZ
+    const quizQuestions=[
+      {q:"বাংলাদেশের রাজধানী কী?",a:"ঢাকা"},
+      {q:"মানব শরীরে কয়টি হাড় আছে?",a:"206"},
+      {q:"পৃথিবীর সবচেয়ে বড় মহাদেশ কোনটি?",a:"এশিয়া"},
+      {q:"গণিতের জনক কে?",a:"পাইথাগোরাস"},
+      {q:"সূর্যের সবচেয়ে কাছের গ্রহ কোনটি?",a:"বুধ"}
+    ];
+    let quizIndex=0,quizScore=0,quizActive=false;
+
+    document.getElementById("quizBtn").addEventListener("click",()=>{
+      quizIndex=0;quizScore=0;quizActive=true;
+      addMessage("🎯 কুইজ শুরু হলো! উত্তর দাও...","ai");
+      askQuestion();
+    });
+
+    function askQuestion(){
+      if(quizIndex<quizQuestions.length){
+        addMessage("প্রশ্ন "+(quizIndex+1)+": "+quizQuestions[quizIndex].q,"ai");
+      }else{
+        addMessage("✅ কুইজ শেষ! তোমার স্কোর: "+quizScore+"/"+quizQuestions.length,"ai");
+        quizActive=false;
+      }
+    }
+
+    function handleQuizAnswer(userAns){
+      const correct=quizQuestions[quizIndex].a.toLowerCase();
+      if(userAns.toLowerCase().includes(correct)){quizScore++;addMessage("✔ সঠিক উত্তর!","ai");}
+      else{addMessage("❌ ভুল উত্তর! সঠিক উত্তর: "+quizQuestions[quizIndex].a,"ai");}
+      quizIndex++;askQuestion();
+    }
+
+    // Rock Paper Scissors
+    let player=0,ai=0,draw=0;
+    function playRPS(choice){
+      const opts=['rock','paper','scissors'];
+      const aiChoice=opts[Math.floor(Math.random()*3)];
+      let result='';
+      if(choice===aiChoice){draw++;result='ড্র হয়েছে!';}
+      else if((choice==='rock'&&aiChoice==='scissors')||(choice==='paper'&&aiChoice==='rock')||(choice==='scissors'&&aiChoice==='paper')){player++;result='তুমি জিতেছো!';}
+      else{ai++;result='AI জিতেছে!';}
+      document.getElementById('score').textContent=`Player:${player} | AI:${ai} | Draw:${draw}`;
+      addMessage(`তুমি ${choice} দিলে, AI দিল ${aiChoice}. ফলাফল: ${result}`,'ai',true);
+    }
+  </script>
+</body>
+</html>
